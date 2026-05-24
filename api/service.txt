@@ -1,3 +1,8 @@
 start api file
 add endpoint structure
 add validation
+fix typo
+add error handling
+refactor code
+refactor code
+final cleanup
