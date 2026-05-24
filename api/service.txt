@@ -1,0 +1,3 @@
+start api file
+add endpoint structure
+add validation
