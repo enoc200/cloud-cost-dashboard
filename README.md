@@ -1,67 +1,62 @@
-Git Scenario-Based Questions (Intermediate
-→ Advanced)
-1. Merge Conflict Scenario
-Two developers edited the same section of app.py in different branches. During merge, Git
-reports a conflict.
-●​ Why did the conflict happen?
-●​ How would you resolve it safely?
-2. Accidental Commit to Main
-You accidentally committed unfinished code directly to the main branch instead of a feature
-branch.
-●​ How would you move the work to a new branch safely?
-3. Remote Push Rejected
-You try:
-git push origin main
-but Git says:
-rejected because remote contains work you do not have locally
-●​ Why did this happen?
-●​ What should you do next?
-4. Deleted Branch RecoveryA teammate deleted a feature branch after merge, but later realized important work is missing.
-●​ Can the commits still be recovered?
-●​ Which Git tools could help?
-5. Sensitive Credentials Exposure
-A developer accidentally pushed AWS keys into GitHub.
-●​ What immediate actions should be taken?
-●​ Why is deleting the file alone not enough?
-6. Rebase vs Merge Decision
-Your team wants a clean linear Git history with fewer merge commits.
-●​ Would you recommend merge or rebase?
-●​ What are the risks involved?
-7. Emergency Production Hotfix
-Your production application is down due to a login bug while new features are still being
-developed.
-●​ Which branch strategy should be used?
-●​ Explain the workflow.
-8. Working Directory Interruption
-You are halfway through implementing a feature when your manager asks you to urgently fix
-another issue on main.
-●​ What Git feature helps you switch tasks safely without committing incomplete work?9. Wrong Commit Message
-You committed:
-git commit -m "stuff fixed"
-●​ How can you correct the commit message professionally without creating another
-commit?
-10. Local Branch Behind Main
-Your feature branch is several commits behind the latest main branch.
-●​ How can you update your branch?
-●​ Compare merge vs rebase approaches.
-11. Multiple Remote Repositories
-A DevOps engineer pushes code to both GitHub and GitLab from one local repository.
-●​ Why might organizations use multiple remotes?
-●​ How would you push to a specific remote?
-12. CI/CD Deployment Failure
-After merging code into main, the CI/CD pipeline fails and production deployment breaks.
-●​ How can Git help identify the problematic changes?
-●​ How can you safely roll back?
-13. Large Feature DevelopmentA developer works on one branch for three months without merging updates from main.
-●​ What problems can this create?
-●​ What best practices could prevent this situation?
-14. Detached HEAD Situation
-A student checks out a specific commit directly using:
-git checkout a1b2c3d
-●​ What is a detached HEAD state?
-●​ Why can it become dangerous?
-15. Protected Main Branch
-Your company prevents direct pushes to the main branch.
-●​ Why is branch protection important?
-●​ How do pull requests improve software quality and collaboration?
-Expected Deliverables:
+# Git Scenario-Based Questions (Intermediate → Advanced)
+
+## 1. Merge Conflict Scenario
+- Conflict happens when two branches edit the same section of a file.  
+- Resolve by manually editing the file, keeping correct changes, then `git add` and `git commit`.
+
+## 2. Accidental Commit to Main
+- Create a new branch from the commit (`git branch feature-branch`).  
+- Reset `main` to the previous clean commit (`git reset --hard origin/main`).
+
+## 3. Remote Push Rejected
+- Remote has commits not present locally.  
+- Run `git pull --rebase origin main` before pushing.
+
+## 4. Deleted Branch Recovery
+- Commits can be recovered since Git history remains.  
+- Use `git reflog` or `git log` to find and restore.
+
+## 5. Sensitive Credentials Exposure
+- Immediately rotate/invalidate exposed keys.  
+- Remove secrets from history using `git filter-repo` or BFG.  
+- Deleting the file alone is not enough because history still contains the keys.
+
+## 6. Rebase vs Merge Decision
+- Rebase gives a clean, linear history.  
+- Risk: rewriting history can cause conflicts if others already pulled the branch.
+
+## 7. Emergency Production Hotfix
+- Create a `hotfix` branch from `main`.  
+- Fix → test → merge into `main` → deploy → merge back into `develop`.
+
+## 8. Working Directory Interruption
+- Use `git stash` to save unfinished work.  
+- Switch to `main`, fix issue, then `git stash pop` to resume.
+
+## 9. Wrong Commit Message
+- Correct with `git commit --amend -m "Clear, professional message"`.
+
+## 10. Local Branch Behind Main
+- Merge: `git merge main` → keeps history with merge commit.  
+- Rebase: `git rebase main` → cleaner linear history.
+
+## 11. Multiple Remote Repositories
+- Organizations use multiple remotes for redundancy or different platforms.  
+- Push with `git push github main` or `git push gitlab main`.
+
+## 12. CI/CD Deployment Failure
+- Use `git log` or `git bisect` to find the breaking commit.  
+- Roll back safely with `git revert <commit>`.
+
+## 13. Large Feature Development
+- Problems: merge conflicts, outdated code.  
+- Best practice: regularly rebase/merge with `main`.
+
+## 14. Detached HEAD Situation
+- HEAD points to a commit, not a branch.  
+- Danger: new commits may be lost unless a branch is created.
+
+## 15. Protected Main Branch
+- Prevents accidental commits and enforces reviews.  
+- Pull requests improve quality through review, testing, and collaboration.
+
